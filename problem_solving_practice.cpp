@@ -133,6 +133,38 @@ int romanToInt(std::string s) {
     return total;
 }
 
+// converts a string to a 32-bit signed integer
+int myAtoi(string s) {
+        int i = 0;
+        int n = s.size();
+        int result = 0;
+        int sign = 1;
+        // Step 1: Skip leading whitespaces
+        while (i < n && s[i] == ' ') {
+            i++;
+        }
+        // Step 2: Handle sign
+        if (i < n && (s[i] == '+' || s[i] == '-')) {
+            sign = (s[i] == '-') ? -1 : 1;
+            i++;
+        }
+        // Step 3: Process digits
+        while (i < n && isdigit(s[i])) {
+            int digit = s[i] - '0';
+
+            // Step 4: Check overflow before multiplying
+            if (result > (INT_MAX - digit) / 10) {
+                return (sign == 1) ? INT_MAX : INT_MIN;
+            }
+
+            result = result * 10 + digit;
+            i++;
+        }
+
+        // Step 5: Return result with sign
+        return result * sign;
+    }
+
 // Finds median of two sorted arrays
 double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {
     std::vector<int> merged;
