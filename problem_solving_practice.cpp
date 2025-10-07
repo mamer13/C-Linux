@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <vector>
+#include <stack>
 #include <climits>
 
 // Definition of a singly-linked list node
@@ -153,6 +154,34 @@ bool isPalindrome(int x) {
     return z == y;
 }
 
+// Checks Valid Parentheses order
+bool isValid(const std::string& s) {
+    //create a stack to push and pop
+    std::stack<char> st;
+
+    for (char c : s) {
+        // If it's an opening bracket, push onto stack
+        if (c == '(' || c == '{' || c == '[') {
+            st.push(c);
+        }
+        // If it's a closing bracket, check top of stack
+        else {
+            if (st.empty()) return false; // no matching opening
+            char top = st.top();
+            // Check if matching type
+            if ((c == ')' && top != '(') ||
+                (c == ']' && top != '[') ||
+                (c == '}' && top != '{'))
+                return false;
+
+            st.pop();
+        }
+
+    }
+    return st.empty();
+
+}
+
 // Finds the longest common prefix in a vector of strings
 std::string longestCommonPrefix(std::vector<std::string>& strs) {
     if (strs.empty()) return "";
@@ -255,6 +284,15 @@ int main() {
 
     // isPalindrome
     std::cout << "Is 121 palindrome? " << (isPalindrome(121) ? "Yes" : "No") << std::endl;
+
+    // isValid
+    std::string tests[] = { "()", "()[]{}", "(]", "([)]", "{[]}", "((((((", "{[()()]}" };
+
+    for (const auto& s : tests) {
+        std::cout << "Input: " << s
+            << " -> " << (isValid(s) ? "Valid" : "Invalid")
+            << std::endl;
+    }
 
     // longestCommonPrefix
     std::vector<std::string> words = { "flower", "flow", "flight" };
