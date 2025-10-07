@@ -50,6 +50,21 @@ int maxArea(std::vector<int>& height) {
     return maxArea;
 }
 
+// Remove Duplicates from Sorted Array
+int removeDuplicates(std::vector<int>& nums) {
+    if (nums.empty()) return 0; // If array is empty, return 0
+    std::unordered_set<int> set; // contains numbers to check duplicates
+    int k = 0;
+    for (int n : nums) {
+        // if value is unique
+        if (set.count(n) == 0) { 
+            set.insert(n);
+            nums[k++] = n;  //update the array and increase the counter
+        }
+    }
+    return k;
+}
+
 // Reverses digits of an integer with overflow check
 int reverse(int x) {
     long long y = 0;
@@ -261,6 +276,18 @@ int main() {
     // maxArea
     std::vector<int> heights = { 1,8,6,2,5,4,8,3,7 };
     std::cout << "Max water area: " << maxArea(heights) << std::endl;
+
+    // removeDuplicates
+    std::vector<int> numsDup = { 1, 1, 2, 3, 3, 4, 4, 5 };
+
+    int newLength = removeDuplicates(numsDup);
+
+    std::cout << "New length: " << newLength << std::endl;
+    std::cout << "Array after removing duplicates: ";
+    for (int i = 0; i < newLength; i++) {
+        std::cout << numsDup[i] << " ";
+    }
+    std::cout << std::endl;
 
     // reverse (digits)
     std::cout << "Reversed digits of 12345: " << reverse(12345) << std::endl;
