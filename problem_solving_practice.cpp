@@ -33,6 +33,55 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     return dummyHead->next;
 }
 
+// merges two lists to one list
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+    if ((list1 == nullptr) && (list2 != nullptr)) return list2;
+    if ((list2 == nullptr) && (list1 != nullptr)) return list1;
+    if ((list1 == nullptr) && (list2 == nullptr)) return nullptr;
+    ListNode* dummyHead = new ListNode(0);
+    ListNode* list = dummyHead;
+    while (list1 && list2) {
+        if (list1->val < list2->val) {
+            list->next = list1;
+            list1 = list1->next;
+        }
+        else {
+            list->next = list2;
+            list2 = list2->next;
+        }
+        list = list->next;
+    }
+    list->next = list1 ? list1 : list2;
+    return dummyHead->next;
+}
+
+// Helper to print linked list
+void printList(ListNode* head) {
+    while (head) {
+        std::cout << head->val;
+        if (head->next) std::cout << " -> ";
+        head = head->next;
+    }
+    std::cout << std::endl;
+}
+
+// Helper to build a linked list from an array
+ListNode* buildList(std::initializer_list<int> vals) {
+    ListNode* head = nullptr;
+    ListNode* tail = nullptr;
+    for (int v : vals) {
+        if (!head) {
+            head = new ListNode(v);
+            tail = head;
+        }
+        else {
+            tail->next = new ListNode(v);
+            tail = tail->next;
+        }
+    }
+    return head;
+}
+
 // Container With Most Water
 int maxArea(std::vector<int>& height) {
     int left = 0;
@@ -57,7 +106,7 @@ int removeDuplicates(std::vector<int>& nums) {
     int k = 0;
     for (int n : nums) {
         // if value is unique
-        if (set.count(n) == 0) { 
+        if (set.count(n) == 0) {
             set.insert(n);
             nums[k++] = n;  //update the array and increase the counter
         }
@@ -272,10 +321,29 @@ int main() {
     for (ListNode* p = result; p != nullptr; p = p->next)
         std::cout << p->val;
     std::cout << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
+
+    //mergeTwoLists
+    // Create two sorted lists
+    ListNode* list1 = buildList({ 1, 3, 5 });
+    ListNode* list2 = buildList({ 2, 4, 6 });
+
+    std::cout << "List 1: ";
+    printList(list1);
+    std::cout << "List 2: ";
+    printList(list2);
+
+    // Merge them
+    ListNode* merged = mergeTwoLists(list1, list2);
+
+    std::cout << "Merged list: ";
+    printList(merged);
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // maxArea
     std::vector<int> heights = { 1,8,6,2,5,4,8,3,7 };
     std::cout << "Max water area: " << maxArea(heights) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // removeDuplicates
     std::vector<int> numsDup = { 1, 1, 2, 3, 3, 4, 4, 5 };
@@ -288,29 +356,37 @@ int main() {
         std::cout << numsDup[i] << " ";
     }
     std::cout << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // reverse (digits)
     std::cout << "Reversed digits of 12345: " << reverse(12345) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // reverseBits
     std::cout << "Reversed bits of 5: " << reverseBits(5) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // lengthOfLongestSubstring
     std::cout << "Length of longest substring of 'abcabcbb': "
         << lengthOfLongestSubstring("abcabcbb") << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // romanToInt
     std::cout << "Roman MCMXCIV to int: " << romanToInt("MCMXCIV") << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // myAtoi
     std::cout << "String '   -42' to int: " << myAtoi("   -42") << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // findMedianSortedArrays
     std::vector<int> a = { 1,3 }, b = { 2 };
     std::cout << "Median of [1,3] and [2]: " << findMedianSortedArrays(a, b) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // isPalindrome
     std::cout << "Is 121 palindrome? " << (isPalindrome(121) ? "Yes" : "No") << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // isValid
     std::string tests[] = { "()", "()[]{}", "(]", "([)]", "{[]}", "((((((", "{[()()]}" };
@@ -320,13 +396,16 @@ int main() {
             << " -> " << (isValid(s) ? "Valid" : "Invalid")
             << std::endl;
     }
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // longestCommonPrefix
     std::vector<std::string> words = { "flower", "flow", "flight" };
     std::cout << "Longest common prefix: " << longestCommonPrefix(words) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // convert (Zigzag)
     std::cout << "Zigzag (PAYPALISHIRING, 3): " << convert("PAYPALISHIRING", 3) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // twoSum
     std::vector<int> nums = { 2,7,11,15 };
@@ -334,6 +413,7 @@ int main() {
     std::cout << "TwoSum indices: ";
     for (int idx : indices) std::cout << idx << " ";
     std::cout << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // reverseArray
     int arr[] = { 1,2,3,4,5 };
@@ -341,9 +421,11 @@ int main() {
     std::cout << "Reversed array: ";
     for (int n : arr) std::cout << n << " ";
     std::cout << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     // getSize
     std::cout << "Size of arr: " << getSize(arr) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
 
     return 0;
 }
