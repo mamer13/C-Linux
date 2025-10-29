@@ -136,6 +136,18 @@ int reverseBits(int n) {
     return x;
 }
 
+//smallest number x greater than or equal to n, such that the binary representation of x contains only set bits
+int smallestNumber(int n) {
+    int y = 0;
+    // Keep shifting n until all bits are processed
+    while (n != 0) {
+        n >>= 1;   // Right shift n (to count how many bits it has)
+        y <<= 1;   // Make space for one more bit
+        y |= 1;    // Set the new bit to 1
+    }
+    return y;  // y will be like 1, 3, 7, 15, 31, ...
+}
+
 // Returns the length of the longest substring without repeating characters
 int lengthOfLongestSubstring(std::string s) {
     std::unordered_set<char> seen;
@@ -364,6 +376,11 @@ int main() {
 
     // reverseBits
     std::cout << "Reversed bits of 5: " << reverseBits(5) << std::endl;
+    std::cout << "---------------------------------------------------" << std::endl;
+
+    //smallestNumber
+    int n = 5;  // small example
+    std::cout << smallestNumber(n) << std::endl;  // Output: 7
     std::cout << "---------------------------------------------------" << std::endl;
 
     // lengthOfLongestSubstring
